@@ -18,6 +18,8 @@ export const mutations = {
       state.state = roomState
       state.activeSpeakerId = null
       state.statsPeerId = null
+    } else {
+      state.state = roomState
     }
   },
 

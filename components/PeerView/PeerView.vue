@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-component="PeerView">
     <div class="info">
       <div class="icons">
         <div
@@ -44,11 +44,23 @@
           <p v-if="audioCodec">codec: {{ audioCodec }}</p>
 
           <div v-if="audioProducerId && audioScore">
-            {{ this._printProducerScore(audioProducerId, audioScore) }}
+            <div>
+              <p>streams:</p>
+              <p v-for="(score, idx) in sortedAudioScores" :key="idx">
+                <span v-if="score.rid !== undefined">
+                  rid:{{ score.rid }}, ssrc:{{ score.ssrc }}, score:{{
+                    score.score
+                  }}
+                </span>
+                <span v-else>
+                  ssrc:{{ score.ssrc }}, score:{{ score.score }}
+                </span>
+              </p>
+            </div>
           </div>
 
           <div v-if="audioConsumerId && audioScore">
-            {{ this._printConsumerScore(audioConsumerId, audioScore) }}
+            {{ _printConsumerScore(audioConsumerId, audioScore) }}
           </div>
         </div>
 
@@ -171,7 +183,17 @@
           </div>
 
           <div v-if="videoProducerId && videoScore">
-            {{ _printProducerScore(videoProducerId, videoScore) }}
+            <p>streams:</p>
+            <p v-for="(score, idx) in sortedVideoScores" :key="idx">
+              <span v-if="score.rid !== undefined">
+                rid:{{ score.rid }}, ssrc:{{ score.ssrc }}, score:{{
+                  score.score
+                }}
+              </span>
+              <span v-else>
+                ssrc:{{ score.ssrc }}, score:{{ score.score }}
+              </span>
+            </p>
           </div>
 
           <div v-if="videoConsumerId && videoScore">
@@ -183,18 +205,17 @@
       <div class="peer" :class="{ 'is-me': isMe }">
         <div v-if="isMe">
           <input
-            value="{peer.displayName}"
-            :propName="displayName"
+            :v-model="peer.displayName"
             class="display-name editable"
-            :classLoading="loading"
-            :classInvalid="invalid"
+            classLoading="loading"
+            classInvalid="invalid"
             :shouldBlockWhileLoading="true"
             :editProps="{
               maxLength: 20,
               autoCorrect: 'false',
               spellCheck: 'false'
             }"
-            @change="onChangeDisplayName(displayName)"
+            @change="$emit('onChangeDisplayName', peer.displayName)"
           />
         </div>
 
@@ -204,7 +225,7 @@
           </span>
         </div>
 
-        <div class="row">
+        <div v-if="peer.device" class="row">
           <span class="device-icon" :class="peer.device.flag" />
           <span class="device-version">
             {{ peer.device.name }} {{ peer.device.version || '' }}
@@ -228,12 +249,7 @@
       :controls="false"
     />
 
-    <audio
-      ref="audioElem"
-      autoPlay
-      :muted="isMe || audioMuted"
-      :controls="false"
-    />
+    <audio ref="audioElem" autoPlay muted :controls="false" />
 
     <canvas ref="canvas" class="face-detection" :class="{ 'is-me': isMe }" />
 
@@ -276,9 +292,31 @@ export default {
       faceDetectionRequestAnimationFrame: null
     }
   },
+  computed: {
+    sortedAudioScores() {
+      const score = this.audioScore
+      const scores = Array.isArray(score) ? score : [score]
+
+      return scores.sort((a, b) => {
+        if (a.rid) return a.rid > b.rid ? 1 : -1
+        else return a.ssrc > b.ssrc ? 1 : -1
+      })
+    },
+    sortedVideoScores() {
+      const score = this.videoScore
+      const scores = Array.isArray(score) ? score : [score]
+
+      return scores.sort((a, b) => {
+        if (a.rid) return a.rid > b.rid ? 1 : -1
+        else return a.ssrc > b.ssrc ? 1 : -1
+      })
+    }
+  },
   watch: {
+    audioMuted() {
+      this.$refs.audioElem.muted = this.isMe || this.audioMuted
+    },
     audioTrack() {
-      console.log('videoTrackWatched')
       this._updateTracks(this.audioTrack, this.videoTrack)
     },
     videoTrack() {
@@ -290,6 +328,9 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
+      this.$refs.videoElem.muted = true
+      this.$refs.audioElem.muted = this.isMe || this.audioMuted
+
       this.setTracks(this.audioTrack, this.videoTrack)
     })
   },
@@ -300,15 +341,13 @@ export default {
         this.videoRtpParameters &&
         this.maxSpatialLayer === null
       ) {
-        this.setState({
-          maxSpatialLayer: this.videoRtpParameters.encodings.length - 1
-        })
+        this.maxSpatialLayer = this.videoRtpParameters.encodings.length - 1
       } else if (
         this.isMe &&
         !this.videoRtpParameters &&
         this.maxSpatialLayer !== null
       ) {
-        this.setState({ maxSpatialLayer: null })
+        this.maxSpatialLayer = null
       }
 
       this.setTracks(audioTrack, videoTrack)
@@ -353,11 +392,11 @@ export default {
         stream.addTrack(videoTrack)
         videoElem.srcObject = stream
 
-        videoElem.oncanplay = function() {
+        videoElem.oncanplay = () => {
           this.videoCanPlay = true
         }
 
-        videoElem.onplay = function() {
+        videoElem.onplay = () => {
           this.videoElemPaused = false
 
           audioElem
@@ -365,7 +404,7 @@ export default {
             .catch((error) => console.warn('audioElem.play() failed:%o', error))
         }
 
-        videoElem.onpause = function() {
+        videoElem.onpause = () => {
           this.videoElemPaused = true
         }
 
@@ -391,8 +430,9 @@ export default {
         const { videoElem } = $this.$refs
 
         if (
-          videoElem.videoWidth !== $this.videoResolutionWidth ||
-          videoElem.videoHeight !== $this.videoResolutionHeight
+          videoElem !== undefined &&
+          (videoElem.videoWidth !== $this.videoResolutionWidth ||
+            videoElem.videoHeight !== $this.videoResolutionHeight)
         ) {
           $this.videoResolutionWidth = videoElem.videoWidth
           $this.videoResolutionHeight = videoElem.videoHeight

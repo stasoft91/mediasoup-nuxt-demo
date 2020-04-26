@@ -1,6 +1,6 @@
 <template>
   <transition appear>
-    <div>
+    <div data-component="Room">
       <Notifications />
 
       <div class="state">
@@ -25,7 +25,7 @@
       <Peers v-if="roomClientReady" :room-client="roomClient" />
 
       <div class="me-container" :class="{ 'active-speaker': amActiveSpeaker }">
-        <Me />
+        <Me v-if="roomClientReady" :room-client="roomClient" />
       </div>
 
       <div class="chat-input-container">

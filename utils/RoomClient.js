@@ -601,6 +601,12 @@ export default class RoomClient {
 
           const { peerId } = consumer.appData
 
+          // TODO: probably move peer removers\adders into consumer removers\adders
+          this.store.commit('peers/removeConsumer', {
+            consumerId,
+            peerId
+          })
+
           this.store.commit('consumers/removeConsumer', {
             consumerId,
             peerId

@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export const state = () => ({
   consumers: []
 })
@@ -28,9 +30,9 @@ export const mutations = {
     )
 
     if (originator === 'local') {
-      consumer.locallyPaused = true
+      Vue.set(consumer, 'locallyPaused', true)
     } else {
-      consumer.remotelyPaused = true
+      Vue.set(consumer, 'remotelyPaused', true)
     }
   },
 
@@ -41,20 +43,20 @@ export const mutations = {
     )
 
     if (originator === 'local') {
-      consumer.locallyPaused = false
+      Vue.set(consumer, 'locallyPaused', false)
     } else {
-      consumer.remotelyPaused = false
+      Vue.set(consumer, 'remotelyPaused', false)
     }
   },
 
   setConsumerCurrentLayers(state, payload) {
     const { consumerId, spatialLayer, temporalLayer } = payload
-    const consumer = state.consumersfind(
+    const consumer = state.consumers.find(
       (consumer) => consumer.id === consumerId
     )
 
-    consumer.currentSpatialLayer = spatialLayer
-    consumer.currentTemporalLayer = temporalLayer
+    Vue.set(consumer, 'currentSpatialLayer', spatialLayer)
+    Vue.set(consumer, 'currentTemporalLayer', temporalLayer)
   },
 
   setConsumerPreferredLayers(state, payload) {
@@ -63,8 +65,8 @@ export const mutations = {
       (consumer) => consumer.id === consumerId
     )
 
-    consumer.preferredSpatialLayer = spatialLayer
-    consumer.preferredTemporalLayer = temporalLayer
+    Vue.set(consumer, 'preferredSpatialLayer', spatialLayer)
+    Vue.set(consumer, 'preferredTemporalLayer', temporalLayer)
   },
 
   setConsumerPriority(state, payload) {
@@ -73,7 +75,7 @@ export const mutations = {
       (consumer) => consumer.id === consumerId
     )
 
-    consumer.priority = priority
+    Vue.set(consumer, 'priority', priority)
   },
 
   setConsumerTrack(state, payload) {
@@ -82,7 +84,7 @@ export const mutations = {
       (consumer) => consumer.id === consumerId
     )
 
-    consumer.track = track
+    Vue.set(consumer, 'track', track)
   },
 
   setConsumerScore(state, payload) {
@@ -91,6 +93,6 @@ export const mutations = {
       (consumer) => consumer.id === consumerId
     )
 
-    consumer.score = score
+    Vue.set(consumer, 'score', score)
   }
 }

@@ -19,7 +19,9 @@
     "hark": "^1.2.3",
     "js-cookie": "^2.2.1",
     "mediasoup-client": "^3.6.5",
+    "nib": "^1.1.2",
     "nuxt": "^2.0.0",
+    "nuxt-stylus-resources-loader": "^2.0.0",
     "pokemon": "^2.0.2",
     "protoo-client": "^4.0.4",
     "url-parse": "^1.4.7"

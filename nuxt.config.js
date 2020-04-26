@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+const resolve = require('path').resolve
 
 export default {
   mode: 'spa',
@@ -26,7 +27,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['assets/mediasoup-demo-app.css'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -36,15 +37,19 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/eslint-module'
+    // '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    [
+      'nuxt-stylus-resources-loader',
+      resolve(__dirname, 'assets/stylus/index.styl')
+    ]
   ],
   /*
    ** Axios module configuration

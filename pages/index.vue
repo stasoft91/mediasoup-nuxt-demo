@@ -1,9 +1,7 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <room></room>
-    </v-flex>
-  </v-layout>
+  <div id="mediasoup-demo-app-container">
+    <room></room>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-component="Peers">
     <transition v-for="peer in peers" :key="peer.id" appear>
       <div
         class="peer-container"
@@ -24,11 +24,8 @@ export default {
     }
   },
   computed: {
-    peers: {
-      cache: false,
-      get() {
-        return this.$store.state.peers.peers
-      }
+    peers() {
+      return this.$store.state.peers.peers
     },
     activeSpeakerId() {
       return this.$store.state.room.activeSpeakerId

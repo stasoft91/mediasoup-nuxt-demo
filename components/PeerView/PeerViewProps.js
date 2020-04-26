@@ -8,11 +8,11 @@ export default {
     default: false
   },
   audioProducerId: {
-    type: Object,
+    type: String,
     default: null
   },
   videoProducerId: {
-    type: Object,
+    type: String,
     default: null
   },
   audioConsumerId: {
@@ -69,7 +69,7 @@ export default {
   },
   audioMuted: {
     type: Boolean,
-    required: true
+    default: false
   },
   videoVisible: {
     type: Boolean,
@@ -77,7 +77,7 @@ export default {
   },
   videoMultiLayer: {
     type: Boolean,
-    required: true
+    required: false
   },
   audioCodec: {
     type: String,
@@ -88,11 +88,11 @@ export default {
     default: null
   },
   audioScore: {
-    type: Object,
+    type: [Object, Array],
     default: null
   },
   videoScore: {
-    type: Object,
+    type: [Object, Array],
     default: null
   },
   faceDetection: {

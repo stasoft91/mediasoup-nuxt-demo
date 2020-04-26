@@ -76,7 +76,9 @@ export default {
         )
       )
 
-      return consumersArray.find((consumer) => consumer.track.kind === 'audio')
+      return consumersArray
+        .filter((consumer) => !!consumer)
+        .find((consumer) => consumer.track.kind === 'audio')
     },
     audioEnabled() {
       return (
@@ -99,7 +101,9 @@ export default {
         )
       )
 
-      return consumersArray.find((consumer) => consumer.track.kind === 'video')
+      return consumersArray
+        .filter((consumer) => !!consumer)
+        .find((consumer) => consumer.track.kind === 'video')
     },
     audioMuted() {
       return this.$store.state.me.audioMuted
@@ -133,7 +137,7 @@ export default {
       this.roomClient.setConsumerPriority(this.videoConsumer.id, priority)
     },
     onSetStatsPeerId(peerId) {
-      this.$store.commit('room.setRoomStatsPeerId', peerId)
+      this.$store.commit('room/setRoomStatsPeerId', peerId)
     }
   }
 }

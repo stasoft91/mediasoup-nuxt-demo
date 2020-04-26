@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-component="Notifications">
     <transition
       v-for="notification in notifications"
       :key="notification.id"
