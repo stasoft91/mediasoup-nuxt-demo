@@ -29,3 +29,15 @@ export default {
   }
 }
 </script>
+
+<script>
+import * as cookiesManager from '~/utils/cookiesManager'
+
+export default {
+  mounted() {
+    if (!cookiesManager.getDevices()) {
+      cookiesManager.setDevices({ webcamEnabled: true })
+    }
+  }
+}
+</script>

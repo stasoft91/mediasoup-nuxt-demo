@@ -278,21 +278,12 @@ export default class RoomClient {
             producerPaused
           } = request.data
 
-          let codecOptions
-
-          if (kind === 'audio') {
-            codecOptions = {
-              opusStereo: 1
-            }
-          }
-
           try {
             const consumer = await this._recvTransport.consume({
               id,
               producerId,
               kind,
               rtpParameters,
-              codecOptions,
               appData: { ...appData, peerId } // Trick.
             })
 
@@ -886,7 +877,7 @@ export default class RoomClient {
 
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            deviceId: { exact: device.deviceId },
+            deviceId: { ideal: device.deviceId },
             ...VIDEO_CONSTRAINS[resolution]
           }
         })
@@ -1271,7 +1262,7 @@ export default class RoomClient {
     }
 
     this.store.commit('me/setAudioOnlyState', {
-      flag: true
+      enabled: true
     })
 
     this.store.commit('me/setAudioOnlyInProgress', {
@@ -1301,7 +1292,7 @@ export default class RoomClient {
     }
 
     this.store.commit('me/setAudioOnlyState', {
-      flag: false
+      enabled: false
     })
 
     this.store.commit('me/setAudioOnlyInProgress', {

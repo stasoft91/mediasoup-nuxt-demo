@@ -143,7 +143,7 @@ export default {
       this.roomClient.setMaxSendingSpatialLayer(spatialLevel)
     },
     setStatsPeerId(peerId) {
-      this.$store.commit('room/setRoomStatsPeerId', peerId)
+      this.$store.commit('room/setRoomStatsPeerId', { peerId })
     },
     toggleShare() {
       if (this.shareState === 'on') {

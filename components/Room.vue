@@ -60,10 +60,11 @@
         />
       </div>
 
-      <Stats />
+      <Stats v-if="roomClientReady" :room-client="roomClient" />
 
       <NetworkThrottle
-        v-if="NETWORK_THROTTLE_SECRET"
+        v-if="roomClientReady && NETWORK_THROTTLE_SECRET"
+        :room-client="roomClient"
         :secret="NETWORK_THROTTLE_SECRET"
       />
     </div>
@@ -181,7 +182,10 @@ export default {
     this.$store.commit('room/setFaceDetection', { flag: faceDetection })
 
     this.$store.commit('me/setMe', {
-      me: { peerId, displayName, displayNameSet, device }
+      peerId,
+      displayName,
+      displayNameSet,
+      device
     })
 
     this.roomClient = new RoomClient({

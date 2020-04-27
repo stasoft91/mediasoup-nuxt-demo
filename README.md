@@ -1,5 +1,5 @@
 # mediasoup-nuxt-example
-
+> WIP
 > Life seemed very unfair with only mediasoup-react example out there.
 
 Mediasoup demo server not included, first you have to:
@@ -13,6 +13,9 @@ Mediasoup demo server not included, first you have to:
 8. https://{client-vhost}/?roomId=my_room_name
 
 After that demo app should work
+
+Related questions are very much welcome
+
 ## Build Setup
 
 ```bash

@@ -259,8 +259,12 @@
 
     <div v-if="videoVisible && videoScore < 5">
       <div class="spinner-container">
-        <!--Spinner /-->
-        SPINNER
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="purple"
+          indeterminate
+        ></v-progress-circular>
       </div>
     </div>
 
@@ -293,6 +297,9 @@ export default {
     }
   },
   computed: {
+    me() {
+      return this.$store.state.me
+    },
     sortedAudioScores() {
       const score = this.audioScore
       const scores = Array.isArray(score) ? score : [score]
@@ -535,7 +542,11 @@ export default {
     },
 
     onStatsClick() {
-      this.$emit('onStatsClick', this.peer)
+      if (this.isMe) {
+        this.$emit('onStatsClick', this.me.id)
+      } else {
+        this.$emit('onStatsClick', this.peer.id)
+      }
     },
     onClickRequestKeyframe() {
       this.$emit('onRequestKeyFrame')
