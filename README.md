@@ -1,4 +1,4 @@
-# mediasoup-nuxt-example
+# mediasoup-nuxt-demo
 
 > Life seemed very unfair with only mediasoup-react example out there.
 
