@@ -17,9 +17,9 @@ Mediasoup demo server not included
 After that demo app should work
 
 Bug reports are welcome, unless they are related to RTC, underlying mediasoup library or mediasoup-client.
-Also, just as original demo authors meant it to be, this is just a demo app, not production ready at all, you are always welcome to read manual (https://mediasoup.org/documentation/) and create something of your own :)
+Also, just as original demo authors meant it to be, this is just a demo app, not production ready at all, you are always welcome to read [Mediasoup docs](https://mediasoup.org/documentation/) and create something of your own :)
 
 ## Disclaimer
 I definitely forgot to port some features and left some bugs, but besides **facial recognition** it seems to work ok
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org) and [Mediasoup docs](https://mediasoup.org/documentation/).
