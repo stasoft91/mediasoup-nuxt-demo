@@ -137,7 +137,7 @@ export default {
       this.roomClient.setConsumerPriority(this.videoConsumer.id, priority)
     },
     onSetStatsPeerId(peerId) {
-      this.$store.commit('room/setRoomStatsPeerId', peerId)
+      this.$store.commit('room/setRoomStatsPeerId', { peerId })
     }
   }
 }

@@ -29,7 +29,7 @@
       </div>
 
       <div class="chat-input-container">
-        <ChatInput />
+        <ChatInput v-if="roomClientReady" :room-client="roomClient" />
       </div>
 
       <div class="sidebar">

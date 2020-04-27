@@ -8,7 +8,7 @@
           @click="showInfo = !showInfo"
         />
 
-        <div class="icon stats" @click="onStatsClick(peer.id)" />
+        <div class="icon stats" @click="onStatsClick" />
       </div>
 
       <div class="box" :class="{ visible: showInfo }">
@@ -534,6 +534,9 @@ export default {
       )
     },
 
+    onStatsClick() {
+      this.$emit('onStatsClick', this.peer)
+    },
     onClickRequestKeyframe() {
       this.$emit('onRequestKeyFrame')
     },

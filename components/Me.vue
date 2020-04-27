@@ -19,7 +19,7 @@
             changeWebcamState,
             disabled: me.webcamInProgress || me.shareInProgress
           }"
-          @click="roomClient.changeWebcam()"
+          @click="changeWebcam"
         />
 
         <div
@@ -151,6 +151,9 @@ export default {
       } else {
         this.roomClient.enableShare()
       }
+    },
+    changeWebcam() {
+      this.sroomClient.changeWebcam()
     },
     toggleWebcam() {
       if (this.webcamState === 'on') {
