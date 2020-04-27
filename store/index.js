@@ -27,7 +27,9 @@ export const actions = {
     commit('notifications/addNotification', notification)
 
     setTimeout(() => {
-      commit('notifications/removeNotification', notification.id)
+      commit('notifications/removeNotification', {
+        notificationId: notification.id
+      })
     }, timeout)
   }
 }
