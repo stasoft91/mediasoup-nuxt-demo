@@ -6,7 +6,7 @@ Mediasoup demo server not included
 
 ## Installation:
 1. git clone https://github.com/versatica/mediasoup-demo
-2. cd mediasoup-demo/server
+2. cd mediasoup-demo/server && yarn
 3. Configure config.js (pay attention to tls section - if you plan to run it localhost don`t forget to create selfsigned ssl certs first)
 4. node server.js
 5. Create nginx vhost (e.g. https://rtc.loc) to reverse proxy to client app port (3000), don`t forget ssl certs there too 
