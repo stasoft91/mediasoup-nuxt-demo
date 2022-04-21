@@ -24,7 +24,7 @@
     "nuxt-stylus-resources-loader": "^2.0.0",
     "pokemon": "^2.0.2",
     "protoo-client": "^4.0.4",
-    "url-parse": "^1.5.2"
+    "url-parse": "^1.5.9"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
